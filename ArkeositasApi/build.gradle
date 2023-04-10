@@ -1,0 +1,72 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '2.5.6'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'com.gorylenko.gradle-git-properties' version '2.3.1'
+	id 'com.google.cloud.tools.jib' version '3.1.4'
+}
+
+
+repositories {
+	mavenLocal()
+	mavenCentral()
+	maven { url 'https://repo.spring.io/milestone' }
+	maven { url "https://jitpack.io" }
+}
+
+group = 'com.jcdtfg.arkeositasapi'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+
+dependencies {
+
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+	// Spring Data Rest
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.5.6'
+	implementation 'org.springframework.boot:spring-boot-starter-data-rest'
+
+	// Spring boot
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// https://mvnrepository.com/artifact/io.springfox/springfox-swagger2
+	implementation 'org.springdoc:springdoc-openapi-ui:1.5.2'
+	implementation 'org.springdoc:springdoc-openapi-ui:1.5.2'
+
+	implementation "mysql:mysql-connector-java:6.0.6"
+	implementation 'org.jetbrains:annotations:24.0.0'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	// Jdbc
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+
+	// Driver postgresql
+	implementation "org.postgresql:postgresql:42.3.1"
+
+	// Seguridad
+	implementation 'io.jsonwebtoken:jjwt:0.7.0'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: '9.0.1'
+	// Encriptacion
+	implementation 'org.bouncycastle:bcprov-jdk16:1.45'
+	implementation 'commons-codec:commons-codec:1.10'
+
+	// Http
+	implementation 'org.apache.httpcomponents:httpclient:4.5.2'
+
+	// https://mvnrepository.com/artifact/org.json/json libreria objetos JSOB
+	implementation 'org.json:json:20190722'
+
+	// Librer�as para anotaciones y manejo de errores
+	implementation 'org.projectlombok:lombok:1.18.22'
+	testImplementation 'org.projectlombok:lombok:1.18.22'
+	annotationProcessor 'org.projectlombok:lombok:1.18.22'
+
+	implementation files('libs/preving-security.jar')
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

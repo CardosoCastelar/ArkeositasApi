@@ -1,0 +1,122 @@
+
+server:
+  port: 8443
+  servlet:
+    context-path: /arkeositas-api
+#  ssl:
+#    key-store: classpath/tomcat.keystore
+#    key-store-password: preving
+#    key-password: preving
+# ===============================
+# = JWT
+# ===============================
+jwt:
+  header: Authorization
+  prefijo: Bearer
+  secret: secret
+  expiration: 18000
+  route:
+    authentication:
+      path: /login
+#${jwt.router.authentication.path}
+#
+# Configuracion para springdoc
+# path: Pagina personalizable para acceder a swagger
+# supported-submit-methods: Propiedad para no incluir el try out dende de cada endpoint
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: ${OPENAPI_DOCS_ENABLED:true}
+    supported-submit-methods: []
+
+spring:
+  jackson:
+    serialization:
+      indent-output: true
+    date-format: com.fasterxml.jackson.databind.util.ISO8601DateFormat
+  data:
+    rest:
+      default-media-type: application/json
+  profiles:
+    active: dev
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 10MB
+  jmx:
+    enabled: false # necesario para no obtener el siguiente error: Unable to register MBean [org.apache.tomcat.dbcp.dbcp2.BasicDataSource
+
+
+    # ===============================
+    # = JPA / HIBERNATE
+    # ===============================
+    # Show or not log for each sql query
+    #  jpa:
+    #    show-sql: true
+    # Hibernate ddl auto (create, create-drop, update): with "create-drop" the database
+    # schema will be automatically created afresh for every start of application
+    #    hibernate:
+    #      ddl-auto: update
+    # Naming strategy
+    #      naming:
+    #        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyHbmImpl
+    #        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+    # Allows Hibernate to generate SQL optimized for a particular DBMS
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+
+---
+
+# =================================================
+# = DEV
+# =================================================
+
+spring:
+  profiles: dev
+
+# ===============================
+# = DATA SOURCE
+# ===============================
+# Set here configurations for the database connection
+postgresql:
+  datasource:
+    jdbcUrl: jdbc:mysql://localhost:3306/db_preving
+    username: USERNAME
+    password: PASSWORD
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    minimum-idle: 1
+    maximum-pool-size: 1
+
+urlSeguridad: https://demointranet.preving.com/seguridad-api
+
+---
+
+# =================================================
+# = DEMO
+# =================================================
+
+spring:
+  profiles: demo
+
+datasource:
+  db-gc2006:
+    jndi-name: java:comp/env/jdbc/gc2006
+
+urlSeguridad: https://demointranet.preving.com/seguridad-api
+
+---
+
+# =================================================
+# = PROD
+# =================================================
+
+spring:
+  profiles: prod
+
+datasource:
+  db-gc2006:
+    jndi-name: java:comp/env/jdbc/gc2006
+
+urlSeguridad: https://intranet.preving.com/seguridad-api
+media.location: mediafiles
